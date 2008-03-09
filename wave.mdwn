@@ -3,6 +3,6 @@
 WAVE is a Haskell library for reading and writing WAVE-format audio files.  truelevel
 is an audio compressor/limiter built with WAVE.  See the Haddock for details.
 
-  * [WAVE Hackage](http://hackage.haskell.org/packages/hackage.html) [source](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/WAVE-0.1)
-  * [truelevel Hackage](http://hackage.haskell.org/packages/hackage.html) [source](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/truelevel-0.1)
+  * [Hackage](http://hackage.haskell.org/packages/hackage.html) [WAVE source](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/WAVE-0.1)
+  * [Hackage](http://hackage.haskell.org/packages/hackage.html) [truelevel source](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/truelevel-0.1)
   * [DaRCS repository](http://svcs.cs.pdx.edu/darcs/truelevel)
