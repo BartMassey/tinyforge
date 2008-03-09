@@ -1,0 +1,6 @@
+# WAVE
+
+WAVE is a Haskell library for reading and writing WAVE-format audio files.  See the Haddock for details.
+
+  * [Hackage](http://hackage.haskell.org/packages/hackage.html) [source](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/WAVE-0.1)
+  * [DaRCS repository](http://svcs.cs.pdx.edu/darcs/WAVE)
