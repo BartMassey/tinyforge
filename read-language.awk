@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 
 BEGIN {
-    printf "CREATE TABLE by_language(num INT, intname VARCHAR(30), language VARCHAR(30), detail VARCHAR(100));\n"
+    printf "CREATE TABLE by_language(intname VARCHAR(30), language VARCHAR(30), detail VARCHAR(100));\n"
     printf "BEGIN TRANSACTION;\n"
 }
 
@@ -19,7 +19,7 @@ $1=="*"&&$2~/\[\[.*]]/ {
         intname = namefields[2];
     intname = tolower(intname);
     printf "INSERT INTO by_language VALUES("
-    printf "%d,'%s','%s',", ++num, intname, langname;
+    printf "'%s','%s',", intname, langname;
     if (NF < 3) {
 	printf "NULL";
     } else {
