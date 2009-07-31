@@ -2,7 +2,7 @@
 
 BEGIN {
     printf "CREATE TABLE categories(num INT, name VARCHAR(30), desc VARCHAR(100));\n"
-    printf "BEGIN TRANSACTION;"
+    printf "BEGIN TRANSACTION;\n"
 }
 
 NF==0 {

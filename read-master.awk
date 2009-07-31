@@ -1,5 +1,10 @@
 #!/usr/bin/awk -f
 
+BEGIN {
+    printf "CREATE TABLE by_category(intname VARCHAR(30), category VARCHAR(30), visname VARCHAR(30), attrib VARCHAR(100));\n"
+    printf "BEGIN TRANSACTION;\n"
+}
+
 NF==0 {
     next;
 }
@@ -13,14 +18,17 @@ $1=="*"&&$2~/\[\[.*]]/ {
     else if (nfields == 2)
         intname = namefields[2];
     intname = tolower(intname);
-    printf "%s,%s,\"%s\",", intname, classname, visname;
-    if (NF >= 3) {
-	printf "\"%s", $3;
+    printf "INSERT INTO by_category VALUES("
+    printf "'%s','%s','%s',", intname, classname, visname;
+    if (NF < 3) {
+	printf "NULL";
+    } else {
+	printf "'%s", $3;
 	for (i = 4; i <= NF; i++)
 	    printf " %s", $i;
-	printf "\"";
+	printf "'";
     }
-    printf "\n";
+    printf ");\n";
     next;
 }
 
@@ -32,4 +40,8 @@ $1!="*"&&NF>1 {
 {
     printf "line %d: syntax error\n", NR >"/dev/stderr";
     exit(1);
+}
+
+END {
+    printf "COMMIT;\n"
 }
