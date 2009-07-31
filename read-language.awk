@@ -1,5 +1,10 @@
 #!/usr/bin/awk -f
 
+BEGIN {
+    printf "CREATE TABLE by_language(num INT, intname VARCHAR(30), language VARCHAR(30), detail VARCHAR(100));\n"
+    printf "BEGIN TRANSACTION;\n"
+}
+
 NF==0 {
     next;
 }
@@ -13,14 +18,17 @@ $1=="*"&&$2~/\[\[.*]]/ {
     else if (nfields == 2)
         intname = namefields[2];
     intname = tolower(intname);
-    printf "%s,%s,", intname, langname;
-    if (NF >= 3) {
-	printf "\"%s", $3;
+    printf "INSERT INTO by_language VALUES("
+    printf "%d,'%s','%s',", ++num, intname, langname;
+    if (NF < 3) {
+	printf "NULL";
+    } else {
+	printf "'%s", $3;
 	for (i = 4; i <= NF; i++)
 	    printf " %s", $i;
-	printf "\"";
+	printf "'";
     }
-    printf "\n";
+    printf ");\n";
     next;
 }
 
@@ -32,4 +40,8 @@ $1!="*"&&NF>1 {
 {
     printf "line %d: syntax error\n", NR >"/dev/stderr";
     exit(1);
+}
+
+END {
+    printf "COMMIT;\n"
 }
