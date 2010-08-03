@@ -1,7 +1,4 @@
 #!/bin/bash
-ITMP=/tmp/forge-$$.mdwn
-trap "rm -f $ITMP" 0 1 2 3 15
-
 function db {
     sqlite3 -list -separator "$1" bartforge.db "$2"
 }
