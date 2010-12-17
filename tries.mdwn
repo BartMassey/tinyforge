@@ -1,7 +1,22 @@
-# Trie
+# STrie
 
-Search
+Simple search
 [tries](https://secure.wikimedia.org/wikipedia/en/wiki/Trie)
-in Haskell. BSD licensed. Enjoy.
+over arbitrary keylists in Haskell. BSD licensed. Enjoy.
+
+Compare and contrast with:
+
+* The
+[bytestring-trie](http://hackage.haskell.org/package/bytestring-trie)
+package. This package takes the name `Data.Trie` and
+provides radix tries (aka PATRICIA tries) with `ByteString`
+keys. I haven't benchmarked it, but it is likely to be much
+faster than my thing. I will probably eventually make my
+thing support the same interface.
+
+* The [TrieMap](http://hackage.haskell.org/package/TrieMap)
+package. This appears to be much, much more sophisticated
+than my package. It is not well-documented, though, and I
+haven't yet looked at how it works.
 
   * [git://svcs.cs.pdx.edu/git/tries.git](http://svcs.cs.pdx.edu/gitweb?p=tries.git;a=tree)
