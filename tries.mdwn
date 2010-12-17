@@ -1,0 +1,7 @@
+# Tries
+
+Search
+[tries](https://secure.wikimedia.org/wikipedia/en/wiki/Trie)
+in Haskell. BSD licensed. Enjoy.
+
+  * [git://svcs.cs.pdx.edu/git/tries.git](http://svcs.cs.pdx.edu/gitweb?p=tries.git;a=tree)
