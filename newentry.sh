@@ -81,6 +81,13 @@ then
     usage
     exit 1
 fi
+if git add "$INTNAME".mdwn
+then
+    :
+else
+    echo "$PGM: could not git add '$INTNAME.mdwn', giving up" >&2
+    exit 1
+fi
 LN=`db "SELECT num FROM languages WHERE name = '$LANGUAGE';"`
 if [ "$LN" = "" ]
 then
@@ -95,3 +102,4 @@ then
 fi
 db "INSERT INTO master VALUES ('$INTNAME', '$CATEGORY', '$VISNAME', $ATTRIB, '$LANGUAGE', $LANGDETAIL);"
 sh genindices.sh
+git commit -am "added $INTNAME"
