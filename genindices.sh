@@ -10,9 +10,9 @@ function onebullet {
     LANGDETAIL="$4"
     if [ "$NAME" = "$VISNAME" ]
     then
-	echo -n "  * [[$NAME]]"
+	echo -n "[[$NAME]]"
     else
-	echo -n "  * [[$VISNAME|$NAME]]"
+	echo -n "[[$VISNAME|$NAME]]"
     fi
     if [ "$LANGDETAIL" != "" ]
     then
@@ -31,6 +31,7 @@ function bullet {
     do
 	echo "$INFO" |
 	( IFS='@' read NAME VISNAME ATTRIB
+	  echo -n "  * "
 	  onebullet "$NAME" "$VISNAME" "$ATTRIB" )
     done
 }
@@ -40,7 +41,18 @@ function langbullet {
     do
 	echo "$INFO" |
 	( IFS='@' read NAME VISNAME ATTRIB LANGDETAIL
+	  echo -n "  * "
 	  onebullet "$NAME" "$VISNAME" "$ATTRIB" "$LANGDETAIL" )
+    done
+}
+
+function datebullet {
+    while read INFO
+    do
+	echo "$INFO" |
+	( IFS='@' read NAME VISNAME ATTRIB DATE
+	  echo -n "  * $DATE "
+	  onebullet "$NAME" "$VISNAME" "$ATTRIB" "" )
     done
 }
 
@@ -62,6 +74,12 @@ function langbullet {
   echo ""
   db '@' "select intname, visname, attrib from master order by intname;" |
   bullet ) >alpha_index.mdwn
+
+# generate date index
+( echo "# Bartforge Date Index"
+  echo ""
+  db '@' "select intname, visname, attrib, adddate from master order by adddate desc;" |
+  datebullet ) >date_index.mdwn
 
 # generate master index
 ( cat index-top.mdwn
