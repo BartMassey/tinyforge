@@ -14,6 +14,7 @@ then
 	exit 1
     fi
 elif [ ! -f forge.db ]
+then
     echo "$PGM: Must be run from the TinyForge or ikiwiki directory" >&2
     exit 1
 fi
