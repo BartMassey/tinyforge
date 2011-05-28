@@ -8,6 +8,7 @@
 # and update the indices to reflect this
 
 PGM="`basename $0`"
+CONF="/usr/local/etc/tinyforge.conf"
 
 function usage {
   echo "$PGM: usage:">&2
@@ -28,19 +29,27 @@ CATEGORY=""
 VISNAME=""
 LANGUAGE=""
 
-HERE="`pwd`"
-if [ -f forge.conf ]
+if [ -f "$CONF" ]
 then
-    . forge.conf
-    if cd "$FORGEPATH" >/dev/null 2>&1
+    . "$CONF"
+    if [ "$FORGEPATH" != "" ]
     then
-	:
-    else
-	echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
-	exit 1
+	if cd "$FORGEPATH" >/dev/null 2>&1
+	then
+	    :
+	else
+	    echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+	    exit 1
+	fi
     fi
 else
-    echo "$PGM: Must be run from the TinyForge directory" >&2
+    echo "$PGM: cannot find TinyForge config file $CONF" >&2
+    exit 1
+fi
+
+if [ ! -f forge.db ]
+then
+    echo "$PGM: cannot find forge directory" >&2
     exit 1
 fi
 
@@ -129,5 +138,5 @@ then
 fi
 
 db "INSERT INTO master (intname, category, visname, attrib, language, langdetail) VALUES ('$INTNAME', '$CATEGORY', '$VISNAME', $ATTRIB, '$LANGUAGE', $LANGDETAIL);"
-"$HERE"/genindices
+tf-index
 git commit -am "added $INTNAME"

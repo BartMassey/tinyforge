@@ -16,12 +16,12 @@ interval.
 TinyForge is built around Git (http://git-scm.com), ikiwiki
 (http://ikiwiki.info) and SQLite 3 (http://www.sqlite.org/),
 so you'll need these installed for any hope of success. The
-forge software consists of a shell script, newentry, that
-you run to add new entries; this script calls another
-script, genindices, to make index pages for your forge. (The
-scripts are written in Bourne shell with the exception of
-shell functions, so they should be pretty portable.) You can
-also call genindices manually: for example, if you have made
+forge software consists of a shell script, tf-add, that you
+run to add new entries; this script calls another script,
+tf-index, to make index pages for your forge. (The scripts
+are written in Bourne shell with the exception of shell
+functions, so they should be pretty portable.) You can also
+call tf-index manually: for example, if you have made
 database changes that need to be reflected in index changes,
 or if you have made a change to the index-top.
 
@@ -43,15 +43,18 @@ an empty database. Run
 
 to commit the database.
 
-Next, go back to the TinyForge source directory, and edit
-forge.conf to have the FORGEPATH variable set to the path to
-the ikiwiki directory and the FORGENAME variable set to the
-name of the forge. Because of the way it is used, FORGEPATH
-may be relative to the TinyForge source directory.  This is
-convenient for BartForge, where it's a subdirectory---you
-might want to try this also. Copy index-top.mdwn into the
-ikiwiki directory and edit it to your taste; you'll probably
-want to git commit it also.
+Next, go back to the TinyForge source directory and copy
+tinyforge.conf to /usr/local/etc. (If you want it somewhere
+else, you'll need to edit tf-add.sh and tf-index.sh, which
+is easy.)  In the config file, set the FORGENAME variable to
+the name of the forge.  You may also want to set the
+FORGEPATH variable to the absolute path to the ikiwiki
+directory.  Copy index-top.mdwn into the ikiwiki directory
+and edit it to your taste; you'll probably want to git
+commit it also.  Run make install with appropriate
+privileges to get tf-add and tf-index installed; they
+install in /usr/local/etc by default. (You may want
+something different, in which case edit the Makefile.)
 
 You are now ready to create your first TinyForge entry. Pick
 a lowercase name with no spaces to act as the "internal
@@ -63,14 +66,13 @@ future use.  (You need not do anything with Git at this
 point, or ever again: TinyForge will manage this for you
 now.)
 
-Finally, run ./newentry from the TinyForge source directory
-with the appropriate arguments. newentry --help will give a
-synopsis.  The arguments are:
+Finally, run tf-add with the appropriate arguments. tf-add
+--help will give a synopsis.  The arguments are:
 
   <intname>:  The internal name of the package as described above
 
   <category>: The category name of the package. The list of
-              categories can be obtained via newentry --help
+              categories can be obtained via tf-add --help
               category .
 
   <visname>:  The "visible name" of the package will be used
@@ -78,7 +80,7 @@ synopsis.  The arguments are:
               reader.
 
   <language>: The programming language of the package. The
-              list of languages can be obtained via newentry
+              list of languages can be obtained via tf-add
               --help language .
 
   langdetail: An optional descriptive string giving more detail
@@ -109,4 +111,4 @@ currently doesn't use foreign key constraints, so it won't
 protect you from screwing up.  Also, note that the languages
 and categories are sorted in their respective index by category
 number, not category name. This is considered minorly a feature,
-but it's easy to fix in the genindices script if it's bugging you.
+but it's easy to fix in the tf-index script if it's bugging you.

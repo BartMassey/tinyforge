@@ -5,21 +5,31 @@
 # distribution of this software for license terms.
 # 
 # Rebuild the forge index pages
-PGM="`basename $0`"
 
-if [ -f forge.conf ]
+PGM="`basename $0`"
+CONF="/usr/local/etc/tinyforge.conf"
+
+if [ -f "$CONF" ]
 then
-    . forge.conf
-    if cd "$FORGEPATH" >/dev/null 2>&1
+    . "$CONF"
+    if [ "$FORGEPATH" != "" ]
     then
-	:
-    else
-	echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
-	exit 1
+	if cd "$FORGEPATH" >/dev/null 2>&1
+	then
+	    :
+	else
+	    echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+	    exit 1
+	fi
     fi
-elif [ ! -f forge.db ]
+else
+    echo "$PGM: cannot find TinyForge config file $CONF" >&2
+    exit 1
+fi
+
+if [ ! -f forge.db ]
 then
-    echo "$PGM: Must be run from the TinyForge or ikiwiki directory" >&2
+    echo "$PGM: cannot find forge directory" >&2
     exit 1
 fi
 
