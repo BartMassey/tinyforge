@@ -124,6 +124,6 @@ then
     exit 1
 fi
 
-db "INSERT INTO master VALUES ('$INTNAME', '$CATEGORY', '$VISNAME', $ATTRIB, '$LANGUAGE', $LANGDETAIL);"
+db "INSERT INTO master (intname, category, visname, attrib, language, langdetail) VALUES ('$INTNAME', '$CATEGORY', '$VISNAME', $ATTRIB, '$LANGUAGE', $LANGDETAIL);"
 "$HERE"/genindices
 git commit -am "added $INTNAME"
