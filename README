@@ -32,14 +32,20 @@ Now run
 
   sqlite3 forge.db <$TINYFORGEPATH/initdb.sql
 
-where TINYFORGEPATH is (obviously) the path to the
-TinyForge source directory, where the initdb file lives.
-You now have an empty database.
+where TINYFORGEPATH is (obviously) the path to the TinyForge
+source directory, where the initdb file lives.  You now have
+an empty database. Run
+
+  git add forge.db; git commit
+
+to commit the database.
 
 Next, go back to the TinyForge source directory, and edit
 forge.conf to have the FORGEPATH variable set to the path to
-the ikiwiki directory. Copy index-top.mdwn into the ikiwiki
-directory and edit it to your taste.
+the ikiwiki directory and the FORGENAME variable set to the
+name of the forge. Copy index-top.mdwn into the ikiwiki
+directory and edit it to your taste; you'll probably want to
+git commit it also.
 
 You are now ready to create your first TinyForge
 entry. Pick a lowercase name with no spaces to act as the
@@ -67,6 +73,14 @@ The arguments are:
   <language>: The programming language of the package. The
               list of languages can be obtained via newentry
               --help language .
+
+  langdetail: An optional descriptive string giving more detail
+              about the programming languages used.
+
+  attrib:     An optional descriptive string giving extra
+              authorship information for projects that you
+	      did not author, or did not solely author, but
+	      are nonetheless in your forge.
 
 Once you have finished, upon visiting your ikiwiki site you
 should find that you have a personal forge with a single
