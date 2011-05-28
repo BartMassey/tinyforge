@@ -1,5 +1,3 @@
 # Template
 
 A description of what this is and does goes here.
-
-  * [git://svcs.cs.pdx.edu/git/template.git](http://svcs.cs.pdx.edu/gitweb?p=template.git;a=tree)
