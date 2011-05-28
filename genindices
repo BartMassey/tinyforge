@@ -77,7 +77,7 @@ function datebullet {
 }
 
 # generate language index
-( echo "# Bartforge Index by Programming Language"
+( echo "# $FORGENAME Index by Programming Language"
   echo ""
   db ' ' "select name, desc from languages order by num;" |
   while read LANG DESC
@@ -90,13 +90,13 @@ function datebullet {
   done ) >language_index.mdwn
 
 # generate alpha index
-( echo "# Bartforge Alphabetical Index"
+( echo "# $FORGENAME Alphabetical Index"
   echo ""
   db '@' "select intname, visname, attrib from master order by intname;" |
   bullet ) >alpha_index.mdwn
 
 # generate date index
-( echo "# Bartforge Date Index"
+( echo "# $FORGENAME Date Index"
   echo ""
   db '@' "select intname, visname, attrib, adddate from master order by adddate desc;" |
   datebullet ) >date_index.mdwn
