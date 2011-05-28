@@ -24,15 +24,19 @@ CATEGORY=""
 VISNAME=""
 LANGUAGE=""
 
-. ./forge.conf
-
 HERE="`pwd`"
-
-if cd "$FORGEPATH" >/dev/null 2>&1
+if [ -f forge.conf ]
 then
-    :
+    . forge.conf
+    if cd "$FORGEPATH" >/dev/null 2>&1
+    then
+	:
+    else
+	echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+	exit 1
+    fi
 else
-    echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+    echo "$PGM: Must be run from the TinyForge directory" >&2
     exit 1
 fi
 

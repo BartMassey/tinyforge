@@ -3,7 +3,20 @@
 # Rebuild the forge index pages
 PGM="`basename $0`"
 
-. forge.conf
+if [ -f forge.conf ]
+then
+    . forge.conf
+    if cd "$FORGEPATH" >/dev/null 2>&1
+    then
+	:
+    else
+	echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+	exit 1
+    fi
+elif [ ! -f forge.db ]
+    echo "$PGM: Must be run from the TinyForge or ikiwiki directory" >&2
+    exit 1
+fi
 
 function db {
     sqlite3 -list -separator "$1" "forge.db" "$2"
@@ -61,14 +74,6 @@ function datebullet {
 	  onebullet "$NAME" "$VISNAME" "$ATTRIB" "" )
     done
 }
-
-if cd "$FORGEPATH" >/dev/null 2>&1
-then
-    :
-else
-    echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
-    exit 1
-fi
 
 # generate language index
 ( echo "# Bartforge Index by Programming Language"
