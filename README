@@ -62,9 +62,7 @@ name" for your project. Copy the file template.mdwn in the
 TinyForge source to intname.mdwn in the ikiwiki directory,
 and edit it to taste. You may want to copy template.mdwn
 itself to the ikiwiki directory first, and customize it for
-future use.  (You need not do anything with Git at this
-point, or ever again: TinyForge will manage this for you
-now.)
+future use.
 
 Finally, run tf-add with the appropriate arguments. tf-add
 --help will give a synopsis.  The arguments are:
@@ -93,11 +91,12 @@ Finally, run tf-add with the appropriate arguments. tf-add
 
 Note that these strings aren't database-sanitized at all, so
 characters such as single-quote or double-quote will likely
-break things. Don't be too clever, please.
+break things. Don't be too clever, please. Once tf-add
+succeeds, it will have made a git commit. Inspect the commit
+as you like, and then git push.
 
-Once you have finished, upon visiting your ikiwiki site you
-should find that you have a personal forge with a single
-entry.  Congratulations!
+Upon visiting your ikiwiki site you should find that you
+have a personal forge with a single entry.  Congratulations!
 
 You will likely find that the languages and categories
 provided by the initial TinyForge setup are not to your
