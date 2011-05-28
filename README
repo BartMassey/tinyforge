@@ -1,0 +1,84 @@
+Copyright © 2011 Bart Massey
+
+Welcome to TinyForge!
+Bart Massey <bart@cs.pdx.edu>
+
+TinyForge is a couple of tiny shell scripts etc that I use
+to maintain my "personal forge", BartForge
+(http://wiki.cs.pdx.edu/bartforge). My personal forge
+currently contains about 50 small software projects, posted
+over the last three years but created over a much longer
+interval.
+
+TinyForge is built around Git (http://git-scm.com), ikiwiki
+(http://ikiwiki.info) and SQLite 3 (http://www.sqlite.org/),
+so you'll need these installed for any hope of success. The
+forge software consists of a shell script, newentry, that
+you run to add new entries; this script calls another
+script, genindices, to make index pages for your forge. (The
+scripts are written in Bourne shell with the exception of
+shell functions, so they should be pretty portable.) You can
+also call genindices manually: for example, if you have made
+database changes that need to be reflected in index changes,
+or if you have made a change to the index-top.
+
+To start your forge, set up a Git-based ikiwiki site for it,
+git clone that site to a convenient directory, and cd there.
+You will want to make your ikiwiki directory different from
+the TinyForge software directory containing this README, so
+that they can have separate Git repositories.
+
+Now run
+
+  sqlite3 forge.db <$TINYFORGEPATH/initdb.sql
+
+where TINYFORGEPATH is (obviously) the path to the
+TinyForge source directory, where the initdb file lives.
+You now have an empty database.
+
+Next, go back to the TinyForge source directory, and edit
+forge.conf to have the FORGEPATH variable set to the path to
+the ikiwiki directory. Copy index-top.mdwn into the ikiwiki
+directory and edit it to your taste.
+
+You are now ready to create your first TinyForge
+entry. Pick a lowercase name with no spaces to act as the
+"internal name" for your project. Copy the file
+template.mdwn in the TinyForge source to intname.mdwn in
+the ikiwiki directory, and edit it to taste. (You need not
+do anything with Git at this point, or ever again:
+TinyForge will manage this for you.)
+
+Finally, run
+./newentry from the TinyForge source directory with the
+appropriate arguments. newentry --help will give a synopsis.
+The arguments are:
+
+  <intname>:  The internal name of the package as described above
+
+  <category>: The category name of the package. The list of
+              categories can be obtained via newentry --help
+              category .
+
+  <visname>:  The "visible name" of the package will be used
+              in most instances for presentation to the
+              reader.
+
+  <language>: The programming language of the package. The
+              list of languages can be obtained via newentry
+              --help language .
+
+Once you have finished, upon visiting your ikiwiki site you
+should find that you have a personal forge with a single
+entry.  Congratulations!
+
+You will likely find that the languages and categories
+provided by the initial TinyForge setup are not to your
+taste. It is relatively straightforward to tweak forge.db
+from the sqlite3 command line to add or delete these. The
+main forge information is stored in a table named master,
+and the languages and categories are in tables named
+languages and categories respectively.  Be careful not to
+remove a language or category that is in use. TinyForge
+currently doesn't use foreign key constraints, so it won't
+protect you from screwing up.

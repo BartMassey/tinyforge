@@ -1,7 +1,8 @@
 #!/bin/bash
 # Copyright © 2010 Bart Massey
-# Insert a new entry into the BartForge db
+# Insert a new entry into the forge db
 # and update the indices to reflect this
+
 PGM="`basename $0`"
 
 function usage {
@@ -12,7 +13,7 @@ function usage {
 }
 
 function db {
-    sqlite3 -list -separator '	' bartforge.db "$1"
+    sqlite3 -list -separator '	' "forge.db" "$1"
 }
 
 NARGS=0
@@ -22,6 +23,18 @@ INTNAME=""
 CATEGORY=""
 VISNAME=""
 LANGUAGE=""
+
+. ./forge.conf
+
+HERE="`pwd`"
+
+if cd "$FORGEPATH" >/dev/null 2>&1
+then
+    :
+else
+    echo "$PGM: Bad FORGEPATH $FORGEPATH" >&2
+    exit 1
+fi
 
 case "$1" in
     --help)
@@ -81,6 +94,7 @@ then
     usage
     exit 1
 fi
+
 if git add "$INTNAME".mdwn
 then
     :
@@ -88,18 +102,24 @@ else
     echo "$PGM: could not git add '$INTNAME.mdwn', giving up" >&2
     exit 1
 fi
+
+# XXX These next two should probably be enforced using foreign
+# key constraints. Oh well.
+
 LN=`db "SELECT num FROM languages WHERE name = '$LANGUAGE';"`
 if [ "$LN" = "" ]
 then
     echo "$PGM: bad language" >&2
     exit 1
 fi
+
 CN=`db "SELECT num FROM categories WHERE name = '$CATEGORY';"`
 if [ "$CN" = "" ]
 then
     echo "$PGM: bad category" >&2
     exit 1
 fi
+
 db "INSERT INTO master VALUES ('$INTNAME', '$CATEGORY', '$VISNAME', $ATTRIB, '$LANGUAGE', $LANGDETAIL);"
-sh genindices.sh
+"$HERE"/genindices
 git commit -am "added $INTNAME"
