@@ -79,12 +79,17 @@ function datebullet {
 # generate language index
 ( echo "# $FORGENAME Index by Programming Language"
   echo ""
-  db ' ' "select name, desc from languages order by num;" |
+  db ' ' "SELECT name, desc FROM languages ORDER BY num;" |
   while read LANG DESC
   do
+      COUNT="`db '@' \"SELECT COUNT(*) FROM master WHERE language = '$LANG';\"`"
+      if [ "$COUNT" -eq 0 ]
+      then
+	  continue
+      fi
       echo "$DESC"
       echo ""
-      db '@' "select intname, visname, attrib, langdetail from master where language = '$LANG' order by intname;" |
+      db '@' "SELECT intname, visname, attrib, langdetail FROM master WHERE language = '$LANG' ORDER BY intname;" |
       langbullet
       echo ""
   done ) >language_index.mdwn
@@ -92,24 +97,29 @@ function datebullet {
 # generate alpha index
 ( echo "# $FORGENAME Alphabetical Index"
   echo ""
-  db '@' "select intname, visname, attrib from master order by intname;" |
+  db '@' "SELECT intname, visname, attrib FROM master ORDER BY intname;" |
   bullet ) >alpha_index.mdwn
 
 # generate date index
 ( echo "# $FORGENAME Date Index"
   echo ""
-  db '@' "select intname, visname, attrib, adddate from master order by adddate desc;" |
+  db '@' "SELECT intname, visname, attrib, adddate FROM master ORDER BY adddate DESC;" |
   datebullet ) >date_index.mdwn
 
 # generate master index
 ( cat index-top.mdwn
   echo ""
-  db ' ' "select name, desc from categories order by num;" |
+  db ' ' "SELECT name, desc FROM categories ORDER BY num;" |
   while read CAT DESC
   do
+      COUNT="`db '@' \"SELECT COUNT(*) FROM master WHERE category = '$CAT';\"`"
+      if [ "$COUNT" -eq 0 ]
+      then
+	  continue
+      fi
       echo "$DESC"
       echo ""
-      db '@' "select intname, visname, attrib from master where category = '$CAT' order by intname;" |
+      db '@' "SELECT intname, visname, attrib FROM master WHERE category = '$CAT' ORDER BY intname;" |
       bullet
       echo ""
   done ) >index.mdwn

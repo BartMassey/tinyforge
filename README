@@ -55,10 +55,9 @@ the ikiwiki directory, and edit it to taste. (You need not
 do anything with Git at this point, or ever again:
 TinyForge will manage this for you.)
 
-Finally, run
-./newentry from the TinyForge source directory with the
-appropriate arguments. newentry --help will give a synopsis.
-The arguments are:
+Finally, run ./newentry from the TinyForge source directory
+with the appropriate arguments. newentry --help will give a
+synopsis.  The arguments are:
 
   <intname>:  The internal name of the package as described above
 
@@ -82,6 +81,10 @@ The arguments are:
 	      did not author, or did not solely author, but
 	      are nonetheless in your forge.
 
+Note that these strings aren't database-sanitized at all, so
+characters such as single-quote or double-quote will likely
+break things. Don't be too clever, please.
+
 Once you have finished, upon visiting your ikiwiki site you
 should find that you have a personal forge with a single
 entry.  Congratulations!
@@ -95,4 +98,7 @@ and the languages and categories are in tables named
 languages and categories respectively.  Be careful not to
 remove a language or category that is in use. TinyForge
 currently doesn't use foreign key constraints, so it won't
-protect you from screwing up.
+protect you from screwing up.  Also, note that the languages
+and categories are sorted in their respective index by category
+number, not category name. This is considered minorly a feature,
+but it's easy to fix in the genindices script if it's bugging you.
